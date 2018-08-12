@@ -1,5 +1,21 @@
-Welcome to Florent Cima's personal website.
+# florentcima
 
-Some work is in progress here...
+## Project setup
+```
+npm install
+```
 
-Please come back later.
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Lints and fixes files
+```
+npm run lint
+```
