@@ -4,25 +4,21 @@
       <Blog/>
     </v-content>
     <v-footer :fixed="fixed" app>
-      <v-content>
-        <span>&copy; Made with &hearts; and VueJS.</span>
-      </v-content>
+      <span>&copy; Made with &hearts; and VueJS.</span>
     </v-footer>
   </v-app>
 </template>
 
 <script>
-import Blog from '@/components/Blog'
+import Blog from "@/components/Blog";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     Blog
   },
-  data () {
-    return {
-      
-    }
+  data() {
+    return {};
   }
-}
+};
 </script>
