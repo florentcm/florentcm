@@ -1,14 +1,42 @@
 <template>
   <div v-if="feed">
-    <img :src="feed.image.url" :alt="feed.image.description">
-    <h2>{{ feed.description }}</h2>
-    <ul>
-      <li v-for="item in feed.items" :key="item.link">
-        <a :href="item.link">{{ item.title }}</a>
-        <br><span class="date">{{ item.isoDate | date('YYYY/MM/DD hh:mm') }}</span>
-      </li>
-    </ul>
-    <a :href="feed.link">See all on Medium</a>
+    <div v-for="item in feed.items" :key="item.link">
+      <v-card class="my-3 post" hover>
+        <v-card-media
+          class="white--text"
+          height="170px"
+          :src="str_img_src(item['content:encoded'])"
+        >
+          <v-container fill-height fluid class="card-img">
+            <v-layout>
+              <v-flex xs12 align-end d-flex>
+                <span class="headline">{{ item.title }}</span>
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </v-card-media>
+        <v-card-text>
+          <span class="date">{{ item.isoDate | date('YYYY/MM/DD hh:mm') }}</span>
+          <p v-html="$options.filters.truncate(item['content:encoded'].replace(/<(?:.|\n)*?>/gm, ''),120)" class="excerpt"></p>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn icon class="blue--text" target="_blank"
+          :href="'https://www.facebook.com/sharer/sharer.php?u=' + encodeURI(item.link)">
+            <v-icon medium>fa-facebook</v-icon>
+          </v-btn>
+          <v-btn icon class="light-blue--text" target="_blank"
+          :href="'https://twitter.com/home?status=' + encodeURI(item.link)">
+            <v-icon medium>fa-twitter</v-icon>
+          </v-btn>
+          <v-btn icon class="red--text" target="_blank"
+          :href="'http://www.reddit.com/submit?url=' + encodeURI(item.link) + '&title=' + encodeURI(item.title)">
+            <v-icon medium>fa-reddit</v-icon>
+          </v-btn>
+          <v-spacer></v-spacer>
+          <v-btn flat class="grey--text">Read More</v-btn>
+        </v-card-actions>
+      </v-card>
+    </div>
   </div>
 </template>
 
@@ -83,6 +111,23 @@ export default {
         }
       }
       return obj;
+    },
+    str_img_src($html) {
+      var m,
+      urls = [],
+      rex = /<img[^>]+src="?([^"\s]+)"?\s*\/>/g;
+
+      while ( m = rex.exec( $html ) ) {
+          urls.push( m[1] );
+      }
+
+      console.log( urls );
+      
+      if (urls.length) {
+        return urls[0];
+      } else {
+        return false;
+      }
     }
   },
 
@@ -93,20 +138,23 @@ export default {
 </script>
 
 <style lang="scss">
-img{
-  width: 60px;
-  height: auto;
-  display: inline-block;
-  vertical-align: middle;
-  margin-right: 30px;
+.post {
+  overflow: hidden
 }
-
-h2{
-  display: inline-block;
-  vertical-align: middle;
-}
-li{
-  list-style-type: square;
-  margin: 15px 0;
+.card-img{
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 1;
+  }
+  > * {
+    z-index: 2;
+  }
 }
 </style>
