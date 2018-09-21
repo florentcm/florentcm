@@ -9,6 +9,7 @@ import "./registerServiceWorker";
 
 Vue.config.productionTip = false;
 
+declare var require: any
 var VueTruncate = require('vue-truncate-filter')
 Vue.use(VueTruncate)
 
