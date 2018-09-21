@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.4.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.9e1aea62b94249a31879f68417eeca0d.js"
+  "/precache-manifest.00320826d0b4d466a2452da71a201d8b.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "florentcima"});
