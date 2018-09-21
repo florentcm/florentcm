@@ -33,7 +33,7 @@
             <v-icon medium>fa-reddit</v-icon>
           </v-btn>
           <v-spacer></v-spacer>
-          <v-btn flat class="grey--text">Read More</v-btn>
+          <v-btn flat class="grey--text" :href="item.link" target="_blank">Read More</v-btn>
         </v-card-actions>
       </v-card>
     </div>
