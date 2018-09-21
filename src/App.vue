@@ -39,30 +39,31 @@
 </template>
 
 <script>
-import Blog from './components/Blog'
+import Blog from "./components/Blog";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     Blog
   },
-  data () {
+  data() {
     return {
       darktheme: false,
-      bio: 'Lead Front-end Web Developer @nventive. 🖤 #HTML5 #SEO #Angular #Apple 🎻 and new Technologies. Chocovore, je tweet aussi en français!'
-    }
+      bio:
+        "Lead Front-end Web Developer @nventive. 🖤 #HTML5 #SEO #Angular #Apple 🎻 and new Technologies. Chocovore, je tweet aussi en français!"
+    };
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
 @media screen and (min-width: 600px) {
   .sticky {
-      position: fixed;
-      top: 50%;
-      left: 25%;
-      transform: translate(-50%,-50%);
-      max-width: 30%;
+    position: fixed;
+    top: 50%;
+    left: 25%;
+    transform: translate(-50%, -50%);
+    max-width: 30%;
   }
 }
 @media screen and (max-width: 600px) {
@@ -71,4 +72,3 @@ export default {
   }
 }
 </style>
-

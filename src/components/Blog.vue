@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import moment from 'moment';
+import moment from "moment";
 
 const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
 let Parser = require("rss-parser");
@@ -57,7 +57,7 @@ export default {
   },
 
   filters: {
-    date: function(str, format = 'MM/DD/YYYY hh:mm'){
+    date: function(str, format = "MM/DD/YYYY hh:mm") {
       return moment(String(str)).format(format);
     }
   },
@@ -66,10 +66,7 @@ export default {
     fetchFeed() {
       this.isLoading = true;
       let context = this;
-      parser.parseURL(CORS_PROXY + this.feedUrl, function(
-        err,
-        feed
-      ) {
+      parser.parseURL(CORS_PROXY + this.feedUrl, function(err, feed) {
         context.feed = feed;
         context.isLoading = false;
       });
@@ -114,15 +111,13 @@ export default {
     },
     str_img_src($html) {
       var m,
-      urls = [],
-      rex = /<img[^>]+src="?([^"\s]+)"?\s*\/>/g;
+        urls = [],
+        rex = /<img[^>]+src="?([^"\s]+)"?\s*\/>/g;
 
-      while ( m = rex.exec( $html ) ) {
-          urls.push( m[1] );
+      while ((m = rex.exec($html))) {
+        urls.push(m[1]);
       }
 
-      console.log( urls );
-      
       if (urls.length) {
         return urls[0];
       } else {
@@ -139,18 +134,18 @@ export default {
 
 <style lang="scss">
 .post {
-  overflow: hidden
+  overflow: hidden;
 }
-.card-img{
+.card-img {
   &:before {
-    content: '';
+    content: "";
     display: block;
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0, 0, 0, 0.5);
     z-index: 1;
   }
   > * {
