@@ -13,8 +13,8 @@
               </v-avatar>
               <div class="headline">Florent <span style="font-weight:bold">Cima</span></div>
               <div class="subheading text-xs-center grey--text pt-1 pb-3">{{ bio }}</div>
-                <v-btn absolute dark fab top left :color="darktheme ? 'white': 'black'" @click="darktheme = !darktheme">
-                  <v-icon :color="!darktheme ? 'white': 'black'">wb_sunny</v-icon>
+                <v-btn absolute dark fab top left :class="{'dark': darktheme}" :color="darktheme ? 'white': 'black'" @click="darktheme = !darktheme">
+<v-icon :color="!darktheme ? 'white': 'black'">invert_colors</v-icon>
               </v-btn>
             </div>
           </v-flex>
@@ -52,11 +52,18 @@ export default {
       bio:
         "Lead Front-end Web Developer @nventive. 🖤 #HTML5 #SEO #Angular #Apple 🎻 and new Technologies. Chocovore, je tweet aussi en français!"
     };
+  },
+  mounted() {
+    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      console.info('dark color scheme detected');
+      this.darktheme = true;
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
+
 @media screen and (min-width: 600px) {
   .sticky {
     position: fixed;

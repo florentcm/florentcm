@@ -1,41 +1,50 @@
 <template>
-  <div v-if="feed">
-    <div v-for="item in feed.items" :key="item.link">
-      <v-card class="my-3 post" hover>
-        <v-card-media
-          class="white--text"
-          height="170px"
-          :src="str_img_src(item['content:encoded'])"
-        >
-          <v-container fill-height fluid class="card-img">
-            <v-layout>
-              <v-flex xs12 align-end d-flex>
-                <span class="headline">{{ item.title }}</span>
-              </v-flex>
-            </v-layout>
-          </v-container>
-        </v-card-media>
-        <v-card-text>
-          <span class="date">{{ item.isoDate | date('YYYY/MM/DD hh:mm') }}</span>
-          <p v-html="$options.filters.truncate(item['content:encoded'].replace(/<(?:.|\n)*?>/gm, ''),120)" class="excerpt"></p>
-        </v-card-text>
-        <v-card-actions>
-          <v-btn icon class="blue--text" target="_blank"
-          :href="'https://www.facebook.com/sharer/sharer.php?u=' + encodeURI(item.link)">
-            <v-icon medium>fa-facebook</v-icon>
-          </v-btn>
-          <v-btn icon class="light-blue--text" target="_blank"
-          :href="'https://twitter.com/home?status=' + encodeURI(item.link)">
-            <v-icon medium>fa-twitter</v-icon>
-          </v-btn>
-          <v-btn icon class="red--text" target="_blank"
-          :href="'http://www.reddit.com/submit?url=' + encodeURI(item.link) + '&title=' + encodeURI(item.title)">
-            <v-icon medium>fa-reddit</v-icon>
-          </v-btn>
-          <v-spacer></v-spacer>
-          <v-btn flat class="grey--text" :href="item.link" target="_blank">Read More</v-btn>
-        </v-card-actions>
-      </v-card>
+  <div>
+    <v-progress-circular
+        :size="50"
+        color="grey"
+        class="loader"
+        indeterminate
+        v-show="isLoading"
+    ></v-progress-circular>
+    <div v-if="feed">
+      <div v-for="item in feed.items" :key="item.link">
+        <v-card class="my-3 post" hover>
+          <v-card-media
+            class="white--text"
+            height="170px"
+            :src="str_img_src(item['content:encoded'])"
+          >
+            <v-container fill-height fluid class="card-img">
+              <v-layout>
+                <v-flex xs12 align-end d-flex>
+                  <span class="headline">{{ item.title }}</span>
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-card-media>
+          <v-card-text>
+            <span class="date">{{ item.isoDate | date('YYYY/MM/DD hh:mm') }}</span>
+            <p v-html="$options.filters.truncate(item['content:encoded'].replace(/<(?:.|\n)*?>/gm, ''),120)" class="excerpt"></p>
+          </v-card-text>
+          <v-card-actions>
+            <v-btn icon class="blue--text" target="_blank"
+            :href="'https://www.facebook.com/sharer/sharer.php?u=' + encodeURI(item.link)">
+              <v-icon medium>fa-facebook</v-icon>
+            </v-btn>
+            <v-btn icon class="light-blue--text" target="_blank"
+            :href="'https://twitter.com/home?status=' + encodeURI(item.link)">
+              <v-icon medium>fa-twitter</v-icon>
+            </v-btn>
+            <v-btn icon class="red--text" target="_blank"
+            :href="'http://www.reddit.com/submit?url=' + encodeURI(item.link) + '&title=' + encodeURI(item.title)">
+              <v-icon medium>fa-reddit</v-icon>
+            </v-btn>
+            <v-spacer></v-spacer>
+            <v-btn flat class="grey--text" :href="item.link" target="_blank">Read More</v-btn>
+          </v-card-actions>
+        </v-card>
+      </div>
     </div>
   </div>
 </template>
@@ -121,7 +130,7 @@ export default {
       if (urls.length) {
         return urls[0];
       } else {
-        return false;
+        return null;
       }
     }
   },
@@ -150,6 +159,18 @@ export default {
   }
   > * {
     z-index: 2;
+  }
+}
+
+.loader {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+
+  @media screen and (min-width: 600px) {
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 75%;
   }
 }
 </style>
