@@ -11,10 +11,22 @@
                   src="https://pbs.twimg.com/profile_images/544896722808238080/_e3uVoUy_400x400.jpeg"
                 >
               </v-avatar>
-              <div class="headline">Florent <span style="font-weight:bold">Cima</span></div>
+              <div class="headline">
+                Florent
+                <span style="font-weight:bold">Cima</span>
+              </div>
               <div class="subheading text-xs-center grey--text pt-1 pb-3">{{ bio }}</div>
-                <v-btn absolute dark fab top left :class="{'dark': darktheme}" :color="darktheme ? 'white': 'black'" @click="darktheme = !darktheme">
-<v-icon :color="!darktheme ? 'white': 'black'">invert_colors</v-icon>
+              <v-btn
+                absolute
+                dark
+                fab
+                top
+                left
+                :class="{'dark': darktheme}"
+                :color="darktheme ? 'white': 'black'"
+                @click="darktheme = !darktheme"
+              >
+                <v-icon :color="!darktheme ? 'white': 'black'">invert_colors</v-icon>
               </v-btn>
             </div>
           </v-flex>
@@ -29,8 +41,7 @@
         <v-flex xs12>
           <div class="white--text ml-3">
             Made with
-            <v-icon class="red--text">favorite</v-icon>
-            and VueJS
+            <v-icon class="red--text">favorite</v-icon>and VueJS
           </div>
         </v-flex>
       </v-layout>
@@ -39,10 +50,10 @@
 </template>
 
 <script>
-import Blog from "./components/Blog";
+import Blog from './components/Blog';
 
 export default {
-  name: "App",
+  name: 'App',
   components: {
     Blog
   },
@@ -50,12 +61,12 @@ export default {
     return {
       darktheme: false,
       bio:
-        "Lead Front-end Web Developer @nventive. 🖤 #HTML5 #SEO #Angular #Apple 🎻 and new Technologies. Chocovore, je tweet aussi en français!"
+        'Lead Front-end Web Developer @nventive. 🖤 #HTML5 #SEO #Angular #Apple 🎻 and new Technologies. Chocovore, je tweet aussi en français!'
     };
   },
   mounted() {
-    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      console.info('dark color scheme detected');
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      //console.info('dark color scheme detected');
       this.darktheme = true;
     }
   }
@@ -63,7 +74,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 @media screen and (min-width: 600px) {
   .sticky {
     position: fixed;

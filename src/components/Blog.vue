@@ -1,15 +1,14 @@
 <template>
   <div>
-    <v-progress-circular
-        :size="50"
-        color="grey"
-        class="loader"
-        indeterminate
-        v-show="isLoading"
-    ></v-progress-circular>
+    <v-progress-circular :size="50" color="grey" class="loader" indeterminate v-show="isLoading"></v-progress-circular>
     <div v-if="feed">
       <div v-for="item in feed.items" :key="item.link">
-        <v-card class="my-3 post" hover>
+        <v-card
+          class="my-3 post"
+          hover
+          v-on:click.native="handleCardClick(item.link, $event)"
+          v-bind:lang="isFrench(item) ? 'fr' : 'en'"
+        >
           <v-card-media
             class="white--text"
             height="170px"
@@ -25,23 +24,47 @@
           </v-card-media>
           <v-card-text>
             <span class="date">{{ item.isoDate | date('YYYY/MM/DD hh:mm') }}</span>
-            <p v-html="$options.filters.truncate(item['content:encoded'].replace(/<(?:.|\n)*?>/gm, ''),120)" class="excerpt"></p>
+            <p
+              v-html="$options.filters.truncate(item['content:encoded'].replace(/<(?:.|\n)*?>/gm, ''),120)"
+              class="excerpt"
+            ></p>
           </v-card-text>
           <v-card-actions>
-            <v-btn icon class="blue--text" target="_blank"
-            :href="'https://www.facebook.com/sharer/sharer.php?u=' + encodeURI(item.link)">
+            <v-btn
+              v-on:click.stop
+              icon
+              class="blue--text secondary-action"
+              target="_blank"
+              :href="'https://www.facebook.com/sharer/sharer.php?u=' + encodeURI(item.link)"
+            >
               <v-icon medium>fa-facebook</v-icon>
             </v-btn>
-            <v-btn icon class="light-blue--text" target="_blank"
-            :href="'https://twitter.com/home?status=' + encodeURI(item.link)">
+            <v-btn
+              v-on:click.stop
+              icon
+              class="light-blue--text secondary-action"
+              target="_blank"
+              :href="'https://twitter.com/home?status=' + encodeURI(item.link)"
+            >
               <v-icon medium>fa-twitter</v-icon>
             </v-btn>
-            <v-btn icon class="red--text" target="_blank"
-            :href="'http://www.reddit.com/submit?url=' + encodeURI(item.link) + '&title=' + encodeURI(item.title)">
+            <v-btn
+              v-on:click.stop
+              icon
+              class="red--text secondary-action"
+              target="_blank"
+              :href="'http://www.reddit.com/submit?url=' + encodeURI(item.link) + '&title=' + encodeURI(item.title)"
+            >
               <v-icon medium>fa-reddit</v-icon>
             </v-btn>
             <v-spacer></v-spacer>
-            <v-btn flat class="grey--text" :href="item.link" target="_blank">Read More</v-btn>
+            <v-btn
+              v-on:click.stop
+              flat
+              class="grey--text main-action"
+              :href="item.link"
+              target="_blank"
+            >{{ isFrench(item) ? 'Lire la suite' : 'Read More'}}</v-btn>
           </v-card-actions>
         </v-card>
       </div>
@@ -50,28 +73,36 @@
 </template>
 
 <script>
-import moment from "moment";
+import moment from 'moment';
 
-const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
-let Parser = require("rss-parser");
+const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
+let Parser = require('rss-parser');
 let parser = new Parser();
 
 export default {
   data() {
     return {
       isLoading: false,
-      feedUrl: "https://medium.com/feed/@florentcm",
+      feedUrl: 'https://medium.com/feed/@florentcm',
       feed: false
     };
   },
 
   filters: {
-    date: function(str, format = "MM/DD/YYYY hh:mm") {
+    date: function(str, format = 'MM/DD/YYYY hh:mm') {
       return moment(String(str)).format(format);
     }
   },
 
   methods: {
+    handleCardClick(link, event) {
+      window.open(link, '_blank');
+    },
+    isFrench(item) {
+      return !!item.categories.find(
+        c => c === 'french' || c === 'fr' || c === 'françai' || c === 'français'
+      );
+    },
     fetchFeed() {
       this.isLoading = true;
       let context = this;
@@ -79,44 +110,6 @@ export default {
         context.feed = feed;
         context.isLoading = false;
       });
-    },
-    xmlToJson(xml) {
-      // Create the return object
-      var obj = {};
-
-      if (xml.nodeType == 1) {
-        // element
-        // do attributes
-        if (xml.attributes.length > 0) {
-          obj["@attributes"] = {};
-          for (var j = 0; j < xml.attributes.length; j++) {
-            var attribute = xml.attributes.item(j);
-            obj["@attributes"][attribute.nodeName] = attribute.nodeValue;
-          }
-        }
-      } else if (xml.nodeType == 3) {
-        // text
-        obj = xml.nodeValue;
-      }
-
-      // do children
-      if (xml.hasChildNodes()) {
-        for (var i = 0; i < xml.childNodes.length; i++) {
-          var item = xml.childNodes.item(i);
-          var nodeName = item.nodeName;
-          if (typeof obj[nodeName] == "undefined") {
-            obj[nodeName] = xmlToJson(item);
-          } else {
-            if (typeof obj[nodeName].push == "undefined") {
-              var old = obj[nodeName];
-              obj[nodeName] = [];
-              obj[nodeName].push(old);
-            }
-            obj[nodeName].push(xmlToJson(item));
-          }
-        }
-      }
-      return obj;
     },
     str_img_src($html) {
       var m,
@@ -147,7 +140,7 @@ export default {
 }
 .card-img {
   &:before {
-    content: "";
+    content: '';
     display: block;
     position: absolute;
     top: 0;
@@ -168,7 +161,7 @@ export default {
   transform: translateX(-50%);
 
   @media screen and (min-width: 600px) {
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     top: 50%;
     left: 75%;
   }
