@@ -1,4 +1,13 @@
-# florentcima
+<p align="center">
+  # florentcm 
+  <br>
+  <br>
+  Personal website of florent cima.
+</p>
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/a8464bf1-baf4-42cf-bb63-98558f85caa7/deploy-status)](https://app.netlify.com/sites/florent/deploys)
+
+[![Website florent.site](https://img.shields.io/website-up-down-green-red/https/florent.site.svg)](https://florent.site/)
 
 ## Project setup
 ```
