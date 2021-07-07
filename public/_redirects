@@ -4,5 +4,6 @@
 https://florent.netlify.com/* https://florent.site/:splat 301!
 
 # Redirect with a 302
-/ https://blog.florent.site 302!
+http://florent.site https://blog.florent.site 302!
+https://florent.site https://blog.florent.site 302!
 /* https://blog.florent.site/:splat 302!
